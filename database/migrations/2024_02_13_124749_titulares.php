@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('titulares', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('URL');
         });
     }
 
