@@ -19,12 +19,12 @@ Route::get('/paper/create', [\App\Http\Controllers\PeriodicoController::class, '
 Route::post('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'store'])->name('paper.store');
 
 
-/*
+
 Route::get('/', function () {
     return view('welcome');
-});*/
+});
 
-Route::get('/dashboard', function () {
+Route::get('/home', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 

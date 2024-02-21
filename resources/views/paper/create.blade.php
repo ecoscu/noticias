@@ -1,22 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>New Paper</title>
-</head>
-<body>
-    
-    <a href="{{ route('home') }}">
-        HOME
-    </a>
-    <br>
-    <h2>ADD NEWSPAPER</h2>
-    <form action="{{ route('paper.store') }}" method="post">
-        @csrf
-        <input type="text" name="URL" placeholder= "URL">
-        <input type="submit" value="GUARDAR" class="px-4 py-2 bg-purple-300 cursor-pointer hover:bg-purple-500 font-bold w-full border rounded border-purple-400 hover:border-purple-700 text-white">
-    </form>
-</body>
-</html>
+<style>
+    .btn-hover:hover {
+        background-color: #3f5468;
+    }
+</style>
+<x-app-layout>
+
+    <body>
+        <x-slot name="header">
+            <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
+                {{ __('ADD NEWSPAPER') }}
+            </h2>
+        </x-slot>
+        <br>
+        <form action="{{ route('paper.store') }}" method="post" class="flex justify-center">
+            @csrf
+            <input type="text" name="URL" placeholder="URL" class="mr-2">
+            <input type="submit" value="AÑADIR"
+                class="px-4 py-2 cursor-pointer font-bold border rounded text-white btn-hover">
+        </form>
+    </body>
+</x-app-layout>

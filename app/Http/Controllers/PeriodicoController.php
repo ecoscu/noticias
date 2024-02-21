@@ -20,26 +20,37 @@ class PeriodicoController extends Controller
     public function create(Request $request)
     {
         //abort_unless(Auth::check(), 404);
-
         return view('paper/create');
     }
 
-   
+
     public function store(PeriodicoRequest $request)
     {
         //$user = Auth::user();
-        $html = file_get_contents($request);
-        
-        
+
+        function obtenerTituloDeURL($url)
+        {
+            // Obtener el contenido de la página web
+            $contenido = file_get_contents($url);
+
+            // Buscar la etiqueta <title> dentro del contenido
+            preg_match("/<title>(.*?)<\/title>/i", $contenido, $matches);
+
+            // Si se encontró la etiqueta <title>, devolver su contenido, de lo contrario devolver null
+            if (isset($matches[1])) {
+                return $matches[1];
+            } else {
+                return null;
+            }
+        }
+
+        $titulo = obtenerTituloDeURL($request);
+
         $paper = new Periodico();
-
-        $paper->name = explode('.', $request)[1];
+        $paper->name = $titulo;
         $paper->URL = $request->input('URL');
-        
-
-
-
         $res = $paper->save();
+
 
         /*
         if ($request->successful()) {
