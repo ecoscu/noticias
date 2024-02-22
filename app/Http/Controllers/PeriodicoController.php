@@ -17,7 +17,7 @@ class PeriodicoController extends Controller
     public function home()
     {
         return view('dashboard', [
-            'papers' => Periodico::get(),
+            'papers' => Periodico::get()
             
         ]);
     }
@@ -29,17 +29,8 @@ class PeriodicoController extends Controller
     }
 
     public function getPaperId($url){
-        $paper = Periodico::where('URL', $url)->first();
-        return $paper ? $paper->id : null;
-    }
-
-    function validarURL($url) {
-        $valdiate = false;
-        if (!preg_match('/^(https?:\/\/)/', $url)) {
-            $url = 'http://' . $url;
-            $valdiate = true;
-        }
-        return $valdiate;
+        $paperId = Periodico::where('URL', $url)->select('id')->first();
+        return $paperId;
     }
 
     public function store(PeriodicoRequest $request)
@@ -65,10 +56,10 @@ class PeriodicoController extends Controller
         $paper->URL = $request->input('URL');
         $res = $paper->save();
 
-        /*$IDpaper = $this->getPaperId($request->input('URL'));
+        $IDpaper = $this->getPaperId($request->input('URL'));
 
         $userPeriodicoController = new User_PeriodicoController();
-        $userPeriodicoController->create(Auth::user(), $IDpaper);*/
+        $userPeriodicoController->create(Auth::user(), $IDpaper);
 
         if ($res) {
             return back()->with('status', 'Periodico creado con exito');

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('User_Periodico', function (Blueprint $table) {
             $table->foreignId('user_id')->constrained();
             $table->foreignId('periodico_id')->constrained();
+            $table->timestamps();
         });
     }
 

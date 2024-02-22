@@ -15,7 +15,7 @@
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     @foreach ($papers as $paper)
-                        <article class="text-left p-2 btn-hover">
+                        <article class="text-left p-2 rounded btn-hover">
                             <a href="{{ $paper->URL }}">
                                 <h2 class="py-4 text-xl font-semibold">{{ $paper->name }}</h2>
                                 <p class="text-m">{{ $paper->URL }}</p>
