@@ -14,18 +14,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/home', [\App\Http\Controllers\PeriodicoController::class, 'home'])->name('home');
-Route::get('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'create'])->name('paper.create');
-Route::post('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'store'])->name('paper.store');
-
-
-
 Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function () {
-    return view('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\PeriodicoController::class, 'home'])->name('home');
+Route::get('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'create'])->name('paper.create');
+Route::post('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'store'])->name('paper.store');
+
+
+Route::get('/dashboard', function () {
+    return app(\App\Http\Controllers\PeriodicoController::class)->home();
+    //return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
