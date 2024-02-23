@@ -21,11 +21,11 @@ Route::get('/', function () {
 Route::get('/dashboard', [\App\Http\Controllers\PeriodicoController::class, 'home'])->name('home');
 Route::get('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'create'])->name('paper.create');
 Route::post('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'store'])->name('paper.store');
-
+Route::get('/papers', [\App\Http\Controllers\PeriodicoController::class, 'papers'])->name('papers');
+Route::get('/paper/{slug}', [\App\Http\Controllers\PeriodicoController::class, 'detail'])->name('paper.detail');
 
 Route::get('/dashboard', function () {
-    return app(\App\Http\Controllers\PeriodicoController::class)->home();
-    //return view('dashboard');
+    return app(\App\Http\Controllers\PeriodicoController::class)->getAllTitulares();
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

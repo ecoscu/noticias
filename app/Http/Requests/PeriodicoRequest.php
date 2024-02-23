@@ -27,7 +27,7 @@ class PeriodicoRequest extends FormRequest{
     public function messages()
     {
         return [
-            'URL.required' => 'You must sent a URL',
+            'URL.required' => 'Debes proporcionar una URL',
         ];
     }
 }

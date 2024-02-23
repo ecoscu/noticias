@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('periodicos', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('slug')->unique();
             $table->string('URL')->unique();
             $table->timestamps();
         });
