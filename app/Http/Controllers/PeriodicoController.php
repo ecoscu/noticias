@@ -110,7 +110,7 @@ class PeriodicoController extends Controller
         $titulares = [];
 
         $crawler->filter('h2')->each(function ($node) use (&$titulares) {
-            
+
             $titulo = $node->text();
 
             // Obtener el href de la etiqueta <a> dentro del titular
@@ -118,14 +118,13 @@ class PeriodicoController extends Controller
             $aTag = $node->filter('a');
             if ($aTag->count() > 0) {
                 $href = $aTag->attr('href');
-                
+
                 // Solo los titulares con href se añadiran al array de titulares
                 $titulares[] = [
                     'titulo' => $titulo,
                     'href' => $href
                 ];
             };
-            
         });
 
         return $titulares;
@@ -151,10 +150,17 @@ class PeriodicoController extends Controller
 
     public function detail($slug)
     {
-        $post = Periodico::where('slug', $slug)->first();
-        abort_unless($post, 404);
-        return view('posts/post', [
-            'post' => $post
+        $periodico = Periodico::where('slug', $slug)->first();
+        abort_unless($periodico, 404);
+
+        
+
+        $titularesPeriodico = $this->obtenerTitularesPeriodico($periodico->URL);
+
+        return view('paper.detail', [
+            'paper' => $periodico,
+            'titulares' => $titularesPeriodico
         ]);
     }
+
 }
