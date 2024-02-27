@@ -2,6 +2,15 @@
     .btn-hover:hover {
         background-color: #3f5468;
     }
+
+    .with-margin {
+        margin-right: 1rem;
+        /* Ajusta el valor según tus necesidades */
+    }
+
+    .icon:hover{
+        scale: 125%;
+    }
 </style>
 <x-app-layout>
     <x-slot name="header">
@@ -16,10 +25,16 @@
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     @foreach ($papers as $paper)
                         <article class="text-left p-2 rounded btn-hover">
-                            <a href="{{ "/paper/{$paper->slug}"  }}">
+                            <a href="{{ "/paper/{$paper->slug}" }}">
                                 <h2 class="py-4 text-xl font-semibold">{{ $paper->name }}</h2>
                                 <p class="text-m">{{ $paper->URL }}</p>
                             </a>
+                            <br>
+                            <div class="options flex justify-end">
+                                <i></i>
+                                <i class="far fa-edit icon with-margin"></i>
+                                <i class="fas fa-trash-alt icon"></i>
+                            </div>
                         </article>
                     @endforeach
                 </div>

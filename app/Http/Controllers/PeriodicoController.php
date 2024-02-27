@@ -153,8 +153,6 @@ class PeriodicoController extends Controller
         $periodico = Periodico::where('slug', $slug)->first();
         abort_unless($periodico, 404);
 
-        
-
         $titularesPeriodico = $this->obtenerTitularesPeriodico($periodico->URL);
 
         return view('paper.detail', [
@@ -162,5 +160,12 @@ class PeriodicoController extends Controller
             'titulares' => $titularesPeriodico
         ]);
     }
+
+    public function deletePeriodico($id){
+        abort_unless(Auth::check(), 404);
+        $periodico = Periodico::where('id', $id)->first();
+        $periodico->delete();
+    }
+
 
 }
