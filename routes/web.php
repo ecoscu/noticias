@@ -23,10 +23,16 @@ Route::get('/paper/create', [\App\Http\Controllers\PeriodicoController::class, '
 Route::post('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'store'])->name('paper.store');
 Route::get('/papers', [\App\Http\Controllers\PeriodicoController::class, 'papers'])->name('papers');
 Route::get('/paper/{slug}', [\App\Http\Controllers\PeriodicoController::class, 'detail'])->name('paper.detail');
+Route::get('/paper/pruebaAPIPeriodicos', [\App\Http\Controllers\PeriodicoController::class, 'pruebaAPIPeriodicos'])->name('pruebaAPIPeriodicos');
+
 
 Route::get('/dashboard', function () {
     return app(\App\Http\Controllers\PeriodicoController::class)->getAllTitulares();
 })->middleware(['auth', 'verified'])->name('dashboard');
+
+
+
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
