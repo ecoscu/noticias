@@ -29,11 +29,11 @@ class ApiController extends Controller
     }
 
 
-    private function obtenerTitularesPeriodico($paperID)
+    private function obtenerTitularesPeriodico($paperURLs)
     {
-        $periodico = Periodico::select('url')->where('id', $paperID)->first();
+        
         $pagina = HttpClient::create();
-        $response = $pagina->request('GET', $periodico->URL);
+        $response = $pagina->request('GET', $paperURLs);
         $content = $response->getContent();
         $crawler = new Crawler($content);
 
@@ -56,7 +56,35 @@ class ApiController extends Controller
                 ];
             };
         });
+        return $titulares;
+    }
+    private function obtenerTitularesPeriodicoJSON($paperID)
+    {
+        $periodico = Periodico::select('URL')->where('id', $paperID)->first();
+        $pagina = HttpClient::create();
+        $response = $pagina->request('GET', $periodico);
+        $content = $response->getContent();
+        $crawler = new Crawler($content);
 
+        $titulares = [];
+
+        $crawler->filter('h2')->each(function ($node) use (&$titulares) {
+
+            $titulo = $node->text();
+
+            // Obtener el href de la etiqueta <a> dentro del titular
+            $href = '';
+            $aTag = $node->filter('a');
+            if ($aTag->count() > 0) {
+                $href = $aTag->attr('href');
+
+                // Solo los titulares con href se añadiran al array de titulares
+                $titulares[] = [
+                    'titulo' => $titulo,
+                    'URL' => $href
+                ];
+            };
+        });
         return response()-> json($titulares);
     }
 }

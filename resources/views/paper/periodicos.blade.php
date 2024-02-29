@@ -8,8 +8,9 @@
         /* Ajusta el valor según tus necesidades */
     }
 
-    .icon:hover{
+    .icon:hover {
         scale: 125%;
+        color: rgb(125, 28, 28)
     }
 </style>
 <x-app-layout>
@@ -31,9 +32,11 @@
                             </a>
                             <br>
                             <div class="options flex justify-end">
-                                <i></i>
-                                <i class="far fa-edit icon with-margin"></i>
-                                <i class="fas fa-trash-alt icon"></i>
+                                <form action="{{ route('delete.paper', $paper->id) }}" method="post">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"><i class="fas fa-trash-alt icon"></i></button>
+                                </form>
                             </div>
                         </article>
                     @endforeach

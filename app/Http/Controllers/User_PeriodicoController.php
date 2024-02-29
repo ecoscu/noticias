@@ -14,4 +14,9 @@ class User_PeriodicoController extends Controller
         $userPeriodico->periodico_id = $paper->id;
         $res = $userPeriodico->save();
     }
+
+    function delete($paper){
+        $deletepaper = User_Periodico::where('id', $paper->id)->first();
+        $deletepaper->delete();
+    }
 }

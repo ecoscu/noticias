@@ -11,7 +11,7 @@ use Illuminate\Validation\Rules\Exists;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 use Illuminate\Support\Facades\Http;
-use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
+
 
 class PeriodicoController extends Controller
 {
@@ -28,12 +28,11 @@ class PeriodicoController extends Controller
     {
         abort_unless(Auth::check(), 401);
 
-        // $pagina = HttpClient::create();
-        // $response = $pagina->request('GET', 'http://localhost:8000/api/Periodicos');
-        // $papers = $response->getContent();
+        $papersJson = HTTP::get('http://localhost:8000/api/Periodicos');
+        $papers = $papersJson->json();
 
         return view('paper/periodicos', [
-            'papers' => Periodico::get()
+            'papers' => $papers
         ]);
     }
 
@@ -168,34 +167,35 @@ class PeriodicoController extends Controller
     public function deletePeriodico($id)
     {
         abort_unless(Auth::check(), 404);
+
         $periodico = Periodico::where('id', $id)->first();
+        $userPeriodicoController = new User_Periodico();
+        $userPeriodicoController->delete($periodico);
         $periodico->delete();
     }
 
-
-
     function pruebaAPIPeriodicos()
     {
-        $url = 'http://localhost:8000/api/Periodicos'; // Reemplaza con la URL de tu API
+        // $url = 'http://localhost:8000/api/Periodicos'; // Reemplaza con la URL de tu API
 
-        // Inicializa cURL
-        $ch = curl_init();
+        // // Inicializa cURL
+        // $ch = curl_init();
 
-        // Configura las opciones de cURL
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        // // Configura las opciones de cURL
+        // curl_setopt($ch, CURLOPT_URL, $url);
+        // curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 
-        // Ejecuta la solicitud
-        $papers = curl_exec($ch);
+        // // Ejecuta la solicitud
+        // $papers = curl_exec($ch);
 
-        // Cierra la sesión cURL
-        curl_close($ch);
+        // // Cierra la sesión cURL
+        // curl_close($ch);
 
-        echo $papers;
+        // echo $papers;
 
         // Imprime la respuesta
         return view('paper/pruebaAPIPeriodicos', [
-            'papers' => $papers
+            'papers' => Periodico::get()
 
         ]);
     }
