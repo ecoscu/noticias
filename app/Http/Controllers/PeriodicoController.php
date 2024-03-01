@@ -11,6 +11,7 @@ use Illuminate\Validation\Rules\Exists;
 use Symfony\Component\DomCrawler\Crawler;
 use Symfony\Component\HttpClient\HttpClient;
 use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\leerPeriodicos;
 
 
 class PeriodicoController extends Controller
@@ -24,15 +25,18 @@ class PeriodicoController extends Controller
         ]);
     }
 
-    public function papers()
+    public function papers()  //SCRIPT
     {
         abort_unless(Auth::check(), 401);
 
-        $papersJson = HTTP::get('http://localhost:8000/api/Periodicos');
-        $papers = $papersJson->json();
+        // $papersJson = HTTP::get('http://localhost:8000/api/Periodicos');
+        // $papers = $papersJson->json();
+        //$papers = leerPeriodicos('http://localhost:8000/api/Periodicos'); 
+
+        $response = file_get_contents("http://localhost:8000/api/Periodicos");
 
         return view('paper/periodicos', [
-            'papers' => $papers
+            'papers' => $response
         ]);
     }
 

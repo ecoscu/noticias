@@ -58,6 +58,7 @@ class ApiController extends Controller
         });
         return $titulares;
     }
+    
     private function obtenerTitularesPeriodicoJSON($paperID)
     {
         $periodico = Periodico::select('URL')->where('id', $paperID)->first();
