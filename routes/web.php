@@ -22,9 +22,11 @@ Route::get('/dashboard', [\App\Http\Controllers\PeriodicoController::class, 'hom
 Route::get('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'create'])->name('paper.create');
 Route::post('/paper/create', [\App\Http\Controllers\PeriodicoController::class, 'store'])->name('paper.store');
 Route::get('/papers', [\App\Http\Controllers\PeriodicoController::class, 'papers'])->name('papers');
-Route::post('/papers/', [\App\Http\Controllers\PeriodicoController::class, 'delete'])->name('delete.paper');
+//Route::post('/papers/{id}', [\App\Http\Controllers\PeriodicoController::class, 'deletePeriodico'])->name('delete.paper');
 Route::get('/paper/{slug}', [\App\Http\Controllers\PeriodicoController::class, 'detail'])->name('paper.detail');
 Route::get('/paper/pruebaAPIPeriodicos', [\App\Http\Controllers\PeriodicoController::class, 'pruebaAPIPeriodicos'])->name('pruebaAPIPeriodicos');
+Route::delete('/paper/{id}', [\App\Http\Controllers\PeriodicoController::class, 'destroy'])->name('delete');
+
 
 
 Route::get('/dashboard', function () {

@@ -26,12 +26,9 @@ class PeriodicoController extends Controller
         ]);
     }
 
-    public function papers()  //SCRIPT
+    public function papers()  
     {
         abort_unless(Auth::check(), 401);
-
-        // $papersJson = HTTP::get('http://localhost:8000/api/Periodicos');
-        // $papers = $papersJson->json();
 
         return view('paper/periodicos', [
             //'papers' => $papers
@@ -126,13 +123,16 @@ class PeriodicoController extends Controller
         ]);
     }
 
-    public function deletePeriodico($id)
+    public function destroy($id)
     {
-        abort_unless(Auth::check(), 404);
+        $periodico = Periodico::findOrFail($id);
 
-        $periodico = Periodico::where('id', $id)->first();
-        $userPeriodicoController = new User_Periodico();
-        $userPeriodicoController->delete($periodico);
-        $periodico->delete();
+        $periodico->usuarios()->detach();
+
+        $res = $periodico->delete();
+
+        if ($res) {
+            return back()->with('success', 'El periódico ha sido eliminado correctamente');
+        }
     }
 }

@@ -10,7 +10,7 @@
 
     .icon:hover {
         scale: 125%;
-        color: rgb(125, 28, 28)
+        color: rgb(199, 79, 79);
     }
 </style>
 <x-app-layout>
@@ -23,24 +23,9 @@
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                <div id='periodicosData' class="p-6 text-gray-900 dark:text-gray-100">
+                <div id='periodicosData' class="text-gray-900 dark:text-gray-100">
 
-                    {{-- @foreach ($papers as $paper)
-                        <article class="text-left p-2 rounded btn-hover">
-                            <a href="{{ "/paper/{$paper->slug}" }}">
-                                <h2 class="py-4 text-xl font-semibold">{{ $paper->name }}</h2>
-                                <p class="text-m">{{ $paper->URL }}</p>
-                            </a>
-                            <br>
-                            <div class="options flex justify-end">
-                                <form action="{{ route('delete.paper', $paper->id) }}" method="post">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"><i class="fas fa-trash-alt icon"></i></button>
-                                </form>
-                            </div>
-                        </article>
-                    @endforeach --}}
+                    {{-- Periodicos recojidos con la API --}}
 
                 </div>
             </div>
@@ -51,10 +36,12 @@
 <script>
     function transformJsonToStructuredArray(json) {
         return json.map(({
+            id,
             name,
             slug,
             URL
         }) => ({
+            id,
             name,
             slug,
             URL
@@ -68,6 +55,7 @@
             const dataContainer = document.getElementById('periodicosData');
 
             structuredData.forEach(({
+                id,
                 name,
                 slug,
                 URL
@@ -86,6 +74,8 @@
 
                 const periodicoURL = document.createElement('a');
                 periodicoURL.textContent = URL;
+                periodicoURL.href = URL;
+                periodicoURL.style.color = 'rgb(88, 118, 205)';
                 periodicoRute.appendChild(periodicoURL);
 
                 dataContainer.appendChild(periodicoContainer);
@@ -96,14 +86,18 @@
                 optionsContainer.classList.add('options', 'flex', 'justify-end');
 
                 const deleteForm = document.createElement('form');
-                deleteForm.action = `/delete/paper/${slug}`;
-                deleteForm.method = 'post';
+                deleteForm.action = '{{ route('delete', '') }}/' + id
+                deleteForm.method = 'POST';
 
                 const csrfTokenInput = document.createElement('input');
                 csrfTokenInput.type = 'hidden';
                 csrfTokenInput.name = '_token';
-                csrfTokenInput.value =
-                'YOUR_CSRF_TOKEN'; // Reemplaza 'YOUR_CSRF_TOKEN' con el valor adecuado
+                csrfTokenInput.value = '{{ csrf_token() }}';
+
+                const methodInput = document.createElement('input'); 
+                methodInput.type = 'hidden';
+                methodInput.name = '_method';
+                methodInput.value = 'DELETE';
 
                 const deleteButton = document.createElement('button');
                 deleteButton.type = 'submit';
@@ -113,6 +107,7 @@
 
                 deleteButton.appendChild(deleteIcon);
                 deleteForm.appendChild(csrfTokenInput);
+                deleteForm.appendChild(methodInput);
                 deleteForm.appendChild(deleteButton);
                 optionsContainer.appendChild(deleteForm);
                 periodicoContainer.appendChild(optionsContainer);

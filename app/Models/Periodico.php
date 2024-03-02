@@ -11,7 +11,12 @@ class Periodico extends Model
     use HasFactory;
     use Sluggable;
 
+    protected $table = 'periodicos';
 
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'user_periodico');
+    }
 
     public function sluggable(): array
     {
