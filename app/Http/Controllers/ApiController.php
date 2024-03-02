@@ -58,9 +58,6 @@ class ApiController extends Controller
         });
         return $titulares;
     }
-
-
-    
     public function TitularesPeriodicoJSON($slug)
     {
         $periodico = Periodico::where('slug', $slug)->first();
