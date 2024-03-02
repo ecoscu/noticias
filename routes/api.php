@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/Periodicos', [ApiController::class, 'Periodicos']);
-Route::get('/Titulares/{paperID}', [ApiController::class, 'obtenerTitularesPeriodicoJSON']);
+Route::get('/TitularesPeriodico/{slug}', [ApiController::class, 'TitularesPeriodicoJSON']);
 Route::get('/Titulares', [ApiController::class, 'getAllTitulares']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

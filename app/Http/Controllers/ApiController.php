@@ -58,11 +58,14 @@ class ApiController extends Controller
         });
         return $titulares;
     }
-    private function obtenerTitularesPeriodicoJSON($paperID)
+
+
+    
+    public function TitularesPeriodicoJSON($slug)
     {
-        $periodico = Periodico::select('URL')->where('id', $paperID)->first();
+        $periodico = Periodico::where('slug', $slug)->first();
         $pagina = HttpClient::create();
-        $response = $pagina->request('GET', $periodico);
+        $response = $pagina->request('GET', $periodico->URL);
         $content = $response->getContent();
         $crawler = new Crawler($content);
 
