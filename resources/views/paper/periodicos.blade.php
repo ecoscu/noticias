@@ -69,7 +69,7 @@
                 periodicoContainer.appendChild(periodicoRute);
 
                 const periodicoName = document.createElement('h3');
-                periodicoName.textContent = name;
+                periodicoName.textContent = id + '-' + name;
                 periodicoRute.appendChild(periodicoName);
 
                 const periodicoURL = document.createElement('a');
